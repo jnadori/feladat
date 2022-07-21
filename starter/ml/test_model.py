@@ -2,7 +2,7 @@ import pytest
 import numpy as np
 import pandas as pd
 from model import *
-from data import process_data
+from data import *
 from sklearn.model_selection import train_test_split
 from sklearn.utils.validation import check_is_fitted
 from sklearn.linear_model import LinearRegression
