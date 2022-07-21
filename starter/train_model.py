@@ -52,7 +52,7 @@ def splice_testing(data_path: str, model_path: str, feature: str) -> None:
     train, test = train_test_split(data, test_size=0.20)
     X_train, y_train, encoder, lb = process_data(
     train, categorical_features=cat_features, label="salary", training=True)
-    with open('output.txt', 'w') as f:
+    with open('../slice_output.txt', 'w') as f:
         for val in test[feature].unique():
             df=test[test[feature] == val]
             X, y, encoder, lb = process_data(
