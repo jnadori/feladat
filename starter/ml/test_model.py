@@ -1,8 +1,8 @@
 import pytest
 import numpy as np
 import pandas as pd
-from ml.model import *
-from ml.data import process_data
+from model import *
+from data import process_data
 from sklearn.model_selection import train_test_split
 from sklearn.utils.validation import check_is_fitted
 from sklearn.linear_model import LinearRegression
@@ -10,7 +10,7 @@ from sklearn.linear_model import LinearRegression
 @pytest.fixture(scope='session')
 def data_():
 
-    df = pd.read_csv('../../starter/data/census.csv')
+    df = pd.read_csv('data/census.csv')
 
     return df
 
