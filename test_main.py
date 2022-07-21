@@ -1,5 +1,6 @@
 from fastapi.testclient import TestClient
 from main import app
+import pytest
 
 
 client = TestClient(app)
@@ -17,5 +18,6 @@ def test_predict():
 def test_predict_bad_feature():
     try:
         r = client.post("/slice_test",json={"model_path":"model/Logic_reg.pkl","data_path":"data/census.csv","feature":"udacity"})
+        pytest.fail
     except KeyError as err:
         return None 
