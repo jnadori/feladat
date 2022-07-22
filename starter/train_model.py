@@ -7,7 +7,7 @@ import pandas as pd
 
 # Add the necessary imports for the starter code.
 # Add code to load in the data.
-def get_model(data_path: str,output_path: str):
+def get_model(data_path: str,output_path: str, feature: str):
     data=pd.read_csv(data_path)
     # Optional enhancement, use K-fold cross validation instead of a train-test split.
     train, test = train_test_split(data, test_size=0.20)
@@ -33,9 +33,19 @@ def get_model(data_path: str,output_path: str):
     lg=train_model(X_train,y_train)
     preds=inference(lg,X_test)
     precision, recall, fbeta = compute_model_metrics(y_test, preds)
-    dump(lg,output_path)
+    dump(lg,str(output_path + 'model.pkl'))
+    dump(encoder,str(output_path + 'encoder.pkl'))
+    dump(lb,str(output_path + 'lb.pkl'))
+    with open('slice_output.txt', 'w') as f:
+        for val in test[feature].unique():
+            df=test[test[feature] == val]
+            X, y, encoder, lb = process_data(
+            df, categorical_features=cat_features, label="salary", training=False,encoder=encoder,lb=lb)
+            preds=inference(lg,X)
+            precision_, recall_, fbeta_ = compute_model_metrics(y, preds)
+            f.write(f"score for {val}: precision: {precision_} recall: {recall_} fbeta: {fbeta_} \n")
     return precision, recall, fbeta 
-
+"""
 def splice_testing(data_path: str, model_path: str, feature: str) -> None:
     cat_features = [
     "workclass",
@@ -60,3 +70,4 @@ def splice_testing(data_path: str, model_path: str, feature: str) -> None:
             preds=inference(model,X)
             precision, recall, fbeta = compute_model_metrics(y, preds)
             f.write(f"score for {val}: precision: {precision} recall: {recall} fbeta: {fbeta} \n")
+"""
